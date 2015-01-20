@@ -1,13 +1,16 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
-## creates an instance of a cache matrix object, with its inverse field, i,
-## initialized to NULL, and a getter and setter function for i
+## Returns a list containing a function to:
+## 1. Set the value of the matrix.
+## 2. Get the value of the matrix.
+## 3. Set the value of the inverse of the matrix.
+## 4. Get the value of the inverse of the matrix.
 
 makeCacheMatrix <- function(x = matrix()) {
     i <- NULL
     set <- function(y) {
-        x <<- y
+        x <<- as.matrix(y)
         i <<- NULL
     }
     get <- function() x
@@ -19,14 +22,14 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## first checks if the inverse value of the cache matrix object input has been
-## calculated (i.e. not NULL). If it has, then it returns the inverse value of
-## the matrix by accessing the i field using the getinverse() function. Else,
-## it calculates and returns the inverse by itself.
+## REQUIRES: Matrix is square and invertible.
+## Returns the inverse of a matrix. First checks if the inverse of the matrix
+## has been computed. If it has, it accesses and returns the result and exits.
+## Else it computes the inverse and sets the value in the cache using the
+## setinverse function.
 
-cacheSolve <- function(x) {
-        ## Return a matrix that is the inverse of 'x'
-    i <- x$getinverse()
+cacheSolve <- function(x, ...) {    
+        i <- x$getinverse()
     if(!is.null(i)) {
         message("getting cached data")
         return(i)
